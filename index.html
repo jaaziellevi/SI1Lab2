@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="pt-br" ng-app="toDoList">
+
+	<head>
+		<title>Agenda de tarefas</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<script src="js/angular.js"></script>
+		<script src="js/toDoList.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+
+	<body ng-controller="toDoListCtrl">
+
+		<div class="jumbotron">
+
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Menu <span class="caret"></span></button>
+				<ul class="dropdown-menu">
+					<li><a href="https://github.com/jaaziellevi/SI1Lab2" target="_blank">GitHub</a></li>
+					<li><a href="" target="_blank">ScreenCast</a></li>
+				</ul>
+			</div>
+
+			<header>
+				<h2 class="title">Lista de Tarefas</h2>
+
+				<div class="progress">
+					<div class="progress-bar progress-bar-success" style="width:{{done}}%">
+						Tarefas Feitas - {{done | number:1}}%
+					</div>
+					<div class="progress-bar progress-bar-danger" style="width:{{notDone}}%">
+						Tarefas a Fazer - {{notDone| number:1}}%
+					</div>
+				</div>
+			</header>
+
+			<table class="table">
+				<tr id="tableTitle">
+					<th></th>
+					<th style="text-align:center">Tarefa</th>
+					<th></th>
+				</tr>
+				<tr id="taskList" ng-class="{selected: task.selected}" ng-repeat="task in tasks">
+					<td><input type="checkbox" ng-model="task.selected" ng-click="addChecked(task.selected)"></td>
+					<td class="task">{{task.task}}</td>
+					<td><button class="btn btn-danger btn-xs" ng-click="eraseTask($index)">Apagar</button></td>
+				</tr>
+			</table>
+
+			<hr/>
+			<input class="form-control" id="task" type="text" ng-model="task.task" ng-keyup="$event.keyCode == 13 ? addTask(task) : null" placeholder="Tarefa">
+			<button class="btn btn-primary btn-block" ng-click="addTask(task)" ng-disabled="!task.task">Nova Tarefa</button>
+			<button class="btn btn-danger btn-block" ng-click="eraseTasks(tasks)">Apagar Tarefas</button>
+		</div>
+	</body>
+</html>
